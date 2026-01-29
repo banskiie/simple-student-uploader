@@ -1,24 +1,20 @@
 "use client"
-
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { format } from "date-fns"
+import dynamic from "next/dynamic";
 
-const Page = () => {
+const PdfViewer = dynamic(() => import('@/components/pdfViewer'), {
+  ssr: false,
+});
+
+
+const App = () => {
   const fileRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [studentName, setStudentName] = useState("")
   const [studentClass, setStudentClass] = useState("")
   const [uploading, setUploading] = useState(false)
-  const [time, setTime] = useState<Date>(new Date())
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
 
   const handleUpload = async () => {
     if (!file) {
@@ -62,65 +58,68 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
-      <span className="text-3xl font-mono py-10 -mt-10">
-        {format(time, "PPpp")}
-      </span>
-      <div className="w-1/3 flex  flex-col gap-2">
-        <Input
-          placeholder="Enter your full name"
-          value={studentName}
-          onChange={(e) => {
-            const value = e.target.value
-              .toUpperCase()
-              .replace(/[^A-Z0-9 ]/g, "")
-            setStudentName(value)
-          }}
-        />
-        <Input
-          placeholder="Enter your class name"
-          value={studentClass}
-          onChange={(e) => {
-            const value = e.target.value
-              .toUpperCase()
-              .replace(/[^A-Z0-9 ]/g, "")
-            setStudentClass(value)
-          }}
-        />
-        <Input
-          ref={fileRef}
-          type="file"
-          accept=".zip,application/zip"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-        />
-        <span className="text-xs text-muted-foreground">
-          Note: Please upload your submission as a compressed{" "}
-          <span className="font-medium underline">.zip</span> file
-        </span>
-        {file && (
-          <span className="text-sm">
-            Selected:{" "}
-            <span
-              onClick={() => {
-                setFile(null)
-                if (fileRef.current) fileRef.current.value = ""
-              }}
-              className="text-sm text-muted-foreground hover:text-destructive hover:underline hover:cursor-pointer"
-            >
-              {file.name}
-            </span>
+    <div className="flex h-screen">
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex  flex-col gap-2">
+          <Input
+            placeholder="Enter your full name"
+            value={studentName}
+            onChange={(e) => {
+              const value = e.target.value
+                .toUpperCase()
+                .replace(/[^A-Z0-9 ]/g, "")
+              setStudentName(value)
+            }}
+          />
+          <Input
+            placeholder="Enter your class name"
+            value={studentClass}
+            onChange={(e) => {
+              const value = e.target.value
+                .toUpperCase()
+                .replace(/[^A-Z0-9 ]/g, "")
+              setStudentClass(value)
+            }}
+          />
+          <Input
+            ref={fileRef}
+            type="file"
+            accept=".zip,application/zip"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+          />
+          <span className="text-xs text-muted-foreground">
+            Note: Please upload your submission as a compressed{" "}
+            <span className="font-medium underline">.zip</span> file
           </span>
-        )}
-        <Button
-          type="button"
-          onClick={handleUpload}
-          disabled={!file || uploading}
-        >
-          {uploading ? "Uploading..." : "Upload ZIP"}
-        </Button>
+          {file && (
+            <span className="text-sm">
+              Selected:{" "}
+              <span
+                onClick={() => {
+                  setFile(null)
+                  if (fileRef.current) fileRef.current.value = ""
+                }}
+                className="text-sm text-muted-foreground hover:text-destructive hover:underline hover:cursor-pointer"
+              >
+                {file.name}
+              </span>
+            </span>
+          )}
+          <Button
+            type="button"
+            onClick={handleUpload}
+            disabled={!file || uploading}
+          >
+            {uploading ? "Uploading..." : "Upload ZIP"}
+          </Button>
+        </div>
+      </div>
+      <div className="flex-1 h-full">
+        <PdfViewer />
       </div>
     </div>
   )
 }
 
-export default Page
+
+export default App
