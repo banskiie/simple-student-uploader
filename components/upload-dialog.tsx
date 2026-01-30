@@ -75,7 +75,9 @@ const UploadDialog = () => {
     <Dialog modal open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button className="absolute top-3 left-3">Ready to Submit?</Button>
+          <Button className="absolute bottom-4 right-8" variant="destructive">
+            Ready to Submit?
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

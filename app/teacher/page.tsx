@@ -122,7 +122,7 @@ const Page = () => {
             await changeLink({
               variables: {
                 lab: selectedLab,
-                pdf: data.path, // 👈 "/uploads/xxx.pdf"
+                pdf: data.path, // 👈 "/pdfs/xxx.pdf"
               },
             })
 
