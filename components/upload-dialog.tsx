@@ -24,7 +24,7 @@ const UploadDialog = () => {
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Please select a ZIP file")
+      alert("Please select a Java/ZIP/COM file")
       return
     }
 
@@ -113,7 +113,7 @@ const UploadDialog = () => {
             <Input
               ref={fileRef}
               type="file"
-              accept=".zip,application/zip"
+              accept=".zip,.java,.com,application/zip,text/x-java-source"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
             />
             {file && (

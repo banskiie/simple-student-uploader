@@ -16,10 +16,15 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // ZIP validation
-  if (!file.name.toLowerCase().endsWith(".zip")) {
+  // Allowed extensions
+  const allowedExtensions = [".zip", ".java", ".com"]
+
+  const lowerName = file.name.toLowerCase()
+  const extension = allowedExtensions.find((ext) => lowerName.endsWith(ext))
+
+  if (!extension) {
     return NextResponse.json(
-      { error: "Only ZIP files allowed" },
+      { error: "Only ZIP, JAVA, or COM files are allowed" },
       { status: 415 },
     )
   }
@@ -30,7 +35,8 @@ export async function POST(req: NextRequest) {
   const safeName = studentName.replace(/[^A-Z0-9]/gi, "_")
   const safeClass = studentClass.replace(/[^A-Z0-9]/gi, "_")
 
-  const newFileName = `${safeClass}_${safeName}_${timestamp}.zip`
+  // Preserve original extension
+  const newFileName = `${safeClass}_${safeName}_${timestamp}${extension}`
 
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)

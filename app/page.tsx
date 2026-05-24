@@ -46,14 +46,13 @@ const Page = () => {
   )
   const [file, setFile] = useState<File | null>(null)
 
-
   const createFolder = async () => {
     await fetch("/api/create-folder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ folderName: Date.now() }),
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (selectedLab) {
@@ -83,10 +82,14 @@ const Page = () => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Computer Lab</SelectLabel>
-              <SelectItem value="a">Lab A</SelectItem>
-              <SelectItem value="b">Lab B</SelectItem>
-              <SelectItem value="c">Lab C</SelectItem>
-              <SelectItem value="d">Lab D</SelectItem>
+              <SelectItem value="a1">Lab A1</SelectItem>
+              <SelectItem value="a2">Lab A2</SelectItem>
+              <SelectItem value="a3">Lab A3</SelectItem>
+              <SelectItem value="a4">Lab A4</SelectItem>
+              <SelectItem value="d1">Lab D1</SelectItem>
+              <SelectItem value="d2">Lab D2</SelectItem>
+              <SelectItem value="d3">Lab D3</SelectItem>
+              <SelectItem value="d4">Lab D4</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
