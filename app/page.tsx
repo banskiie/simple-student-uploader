@@ -82,14 +82,21 @@ const Page = () => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Computer Lab</SelectLabel>
-              <SelectItem value="a1">Lab A1</SelectItem>
-              <SelectItem value="a2">Lab A2</SelectItem>
-              <SelectItem value="a3">Lab A3</SelectItem>
-              <SelectItem value="a4">Lab A4</SelectItem>
-              <SelectItem value="d1">Lab D1</SelectItem>
-              <SelectItem value="d2">Lab D2</SelectItem>
-              <SelectItem value="d3">Lab D3</SelectItem>
-              <SelectItem value="d4">Lab D4</SelectItem>
+              <SelectItem value="a1">Lab A1 - CC11</SelectItem>
+              <SelectItem value="a2">Lab A2 - CC12</SelectItem>
+              <SelectItem value="a3">Lab A3 - CSCC31</SelectItem>
+
+              <SelectItem value="b1">Lab B1 - CC11</SelectItem>
+              <SelectItem value="b2">Lab B2 - CC12</SelectItem>
+              <SelectItem value="b3">Lab B3 - CSCC31</SelectItem>
+             
+              <SelectItem value="c1">LaC C1 - CC11</SelectItem>
+              <SelectItem value="c2">LaC C2 - CC12</SelectItem>
+              <SelectItem value="c3">LaC C3 - CSCC31</SelectItem>
+             
+              <SelectItem value="d1">Lab D1 - CC11</SelectItem>
+              <SelectItem value="d2">Lab D2 - CC12</SelectItem>
+              <SelectItem value="d3">Lab D3 - CSCC31</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
