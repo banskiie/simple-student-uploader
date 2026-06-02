@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "react-hot-toast"
+
+const SUBMITTED_KEY = "student_submitted"
 
 const UploadDialog = () => {
   const fileRef = useRef<HTMLInputElement>(null)
@@ -21,6 +23,11 @@ const UploadDialog = () => {
   const [studentClass, setStudentClass] = useState("")
   const [uploading, setUploading] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    setSubmitted(localStorage.getItem(SUBMITTED_KEY) === "true")
+  }, [])
 
   const handleUpload = async () => {
     if (!file) {
@@ -48,6 +55,8 @@ const UploadDialog = () => {
 
       if (!res.ok) throw new Error("Upload failed")
 
+      localStorage.setItem(SUBMITTED_KEY, "true")
+      setSubmitted(true)
       toast.success(
         "Your submission is uploaded. Please notify your proctor.",
         {
@@ -72,11 +81,16 @@ const UploadDialog = () => {
   }
 
   return (
-    <Dialog modal open={open} onOpenChange={setOpen}>
+    <Dialog modal open={open} onOpenChange={submitted ? undefined : setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button className="absolute bottom-4 right-8" variant="destructive">
-            Ready to Submit?
+          <Button
+            className="absolute bottom-4 right-8"
+            variant="destructive"
+            disabled={submitted}
+            aria-disabled={submitted}
+          >
+            {submitted ? "Already Submitted" : "Ready to Submit?"}
           </Button>
         </DialogTrigger>
         <DialogContent>
